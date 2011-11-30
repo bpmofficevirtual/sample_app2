@@ -1,2 +1,2 @@
-# Ruby on Rails Tutorial: Sample application **(2)**
+# Ruby on Rails Tutorial: Sample application _(2)_
 
