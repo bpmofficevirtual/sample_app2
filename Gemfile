@@ -1,3 +1,8 @@
+#########################################################
+## Colocado por cris:
+gem 'rake', '0.8.7'   # cris: Fixar WARNS!! em "migrate" (Ant: 0.9.2.2)
+#########################################################
+
 #A note about versions: these versions are ones that have been confirmed to WORK for the purposes here (Hartl book).  If you use different versions, they may cause problems compatibility-wise.  Change at your own risk.
 
 source 'http://rubygems.org'
@@ -37,5 +42,6 @@ group :test do
   gem 'ZenTest', '4.4.2'
   #We don't actually need ZenTest, but it is installed automatically as a dependency of autotest-inotify
 end
+
 
 

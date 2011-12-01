@@ -91,7 +91,7 @@ GEM
       activesupport (= 3.0.3)
       rake (>= 0.8.7)
       thor (~> 0.14.4)
-    rake (0.9.2.2)
+    rake (0.8.7)
     rb-inotify (0.8.4)
       ffi (>= 0.5.0)
     rest-client (1.6.7)
@@ -151,6 +151,7 @@ DEPENDENCIES
   gravatar_image_tag
   heroku
   rails (= 3.0.3)
+  rake (= 0.8.7)
   rb-inotify (= 0.8.4)
   rspec (= 2.3.0)
   rspec-rails (= 2.3.0)
