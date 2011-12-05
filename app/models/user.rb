@@ -8,11 +8,13 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+require 'digest'   ## Para ENCRYPT! (necessário em algums sistemas)
 
 class User < ActiveRecord::Base
 
    # Atributos
-   attr_accessible :name, :email
+   attr_accessor   :password  ## ATRIBUTO VIRTUAL
+   attr_accessible :name, :email, :password, :password_confirmation
 
 
    # Validações
@@ -24,5 +26,48 @@ class User < ActiveRecord::Base
    validates :email, :presence   => true,
 		     :format     => { :with => email_regex },
 		     :uniqueness => { :case_sensitive => false }
+
+
+   validates :password, :presence     => true,
+                        :confirmation => true,
+		        :length       => { :within => 6..40 }
+
+
+   # Callbacks
+   before_save :encrypt_password
+
+   # Return true if the user's password matches the submitted password.
+   def has_password?(submitted_password)
+     # Compare encrypted_password with the encrypted version of
+     # submitted_password
+     encrypted_password == encrypt(submitted_password)
+   end
+
+   def self.authenticate(email, submitted_password) ## MÉTODO DE CLASSE: self
+     user = find_by_email(email)
+     return nil  if user.nil?
+     return user if user.has_password?(submitted_password)
+   end
+   
+   ################################################
+   private
+
+    def encrypt_password
+      self.salt = make_salt unless has_password?(password)  ## **SELF** é obrigatório caso contrário será criada uma variável LOCAL!
+      self.encrypted_password = encrypt(password)
+    end
+
+    def encrypt(string)
+      secure_hash("#{salt}--#{string}")
+    end
+
+    def make_salt
+       secure_hash("#{Time.now.utc}--#{password}")
+    end
+
+    def secure_hash(string)
+       Digest::SHA2.hexdigest(string)
+    end
+   ################################################
 
 end
