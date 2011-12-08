@@ -5,12 +5,20 @@ Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-  
+
+  ######################################## cris: Limpeza do BD nos    
+  ## testes de INTEGRAÇÃO para evitar conflito com os demais teste
+  require 'database_cleaner'
+  DatabaseCleaner.strategy = :truncation  
+  ########################################
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-  
+  ######################################## cris: Limpeza do BD nos    
+  ## testes de INTEGRAÇÃO para evitar conflito com os demais teste
+  DatabaseCleaner.clean
+  ########################################
 end
 
 # --- Instructions ---
@@ -53,4 +61,7 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
 end
+
+

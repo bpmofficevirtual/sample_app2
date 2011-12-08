@@ -29,10 +29,10 @@ describe "Users" do
       it "should make a new user" do
         lambda do
           visit signup_path
-          fill_in "Name", 		:with => "Example User"
-  	  fill_in "Email",		:with => "user@example.com"
-  	  fill_in "Password",		:with => "foobar"
-	  fill_in "Confirmation",	:with => "foobar"
+          fill_in "Name", 		:with => "Example User4"
+  	  fill_in "Email",		:with => "user4@example.com"
+  	  fill_in "Password",		:with => "foobar4"
+	  fill_in "Confirmation",	:with => "foobar4"
 	  click_button
           response.should have_selector("div.flash.success", 
 					:content => "Welcome")
@@ -40,7 +40,6 @@ describe "Users" do
         end.should change(User, :count).by(1)
       end
     end
-
 
   end
 

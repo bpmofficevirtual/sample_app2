@@ -49,6 +49,29 @@ describe UsersController do
       response.should have_selector("title", :content => "Sign Up")
     end
 
+    ############ Teste da presença dos campos
+    it "should have a name field" do
+       get :new
+       response.should have_selector("input [name='user[name]'][type='text']")
+    end
+
+    it "should have a email field" do
+       get :new
+       response.should have_selector("input [name='user[email]'][type='text']")
+    end
+
+    it "should have a password field" do
+       get :new
+       response.should have_selector("input [name='user[password]'][type='password']")
+    end
+
+    it "should have a password confirmation field" do
+       get :new
+       response.should have_selector("input [name='user[password_confirmation]'][type='password']")
+    end
+
+    ############
+
   end
 
   describe "POST 'create'" do
@@ -80,7 +103,7 @@ describe UsersController do
     describe "success" do
        
        before (:each) do
-          @attr = { :name => "New User", :email => "user@example.com", :password => "foobar", :password_confirmation => "foobar" }
+          @attr = { :name => "New User2", :email => "user@example2.com", :password => "foobar2", :password_confirmation => "foobar2" }
        end
 
        it "should create a user" do
