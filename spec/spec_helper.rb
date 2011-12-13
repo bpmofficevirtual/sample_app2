@@ -11,6 +11,22 @@ Spork.prefork do
   require 'database_cleaner'
   DatabaseCleaner.strategy = :truncation  
   ########################################
+
+  ####################################### 
+  ## cris: Para simular mesmo usuário logado entre TODOS os testes
+  def test_sign_in(user)
+     controller.sign_in(user)
+  end
+
+  def integration_sign_in(user)
+     visit signin_path
+     fill_in "Email", 	:with => user.email
+     fill_in "Password",:with => user.password
+     click_button
+  end
+  ####################################### 
+  
+
 end
 
 Spork.each_run do
