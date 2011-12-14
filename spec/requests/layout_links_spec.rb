@@ -72,7 +72,7 @@ describe "Layout Links" do
        integration_sign_in(@user)
     end
 
-    it "should have a signout link" do 
+     it "should have a signout link" do 
        visit root_path
        response.should have_selector("a", :href => signout_path, :content => "Sign out")
     end
