@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
     else
        # Sign the user in and redirect to the userś  show page.
        sign_in user
-       redirect_to user
+       redirect_back_or user ## Anterior: redirect_to user
     end
   end
 

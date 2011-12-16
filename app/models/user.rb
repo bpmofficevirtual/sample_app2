@@ -14,7 +14,9 @@ class User < ActiveRecord::Base
 
    # Atributos
    attr_accessor   :password  ## ATRIBUTO VIRTUAL
-   attr_accessible :name, :email, :password, :password_confirmation
+
+   ## Questão de segurança do site : :admin não está acessível! (put /users/17?admin=1 não irá operar!)
+   attr_accessible :name, :email, :password, :password_confirmation 
 
 
    # Validações

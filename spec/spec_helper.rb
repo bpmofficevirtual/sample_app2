@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'database_cleaner'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 
@@ -8,7 +9,7 @@ Spork.prefork do
 
   ######################################## cris: Limpeza do BD nos    
   ## testes de INTEGRAÇÃO para evitar conflito com os demais teste
-  require 'database_cleaner'
+#  require 'database_cleaner'
   DatabaseCleaner.strategy = :truncation  
   ########################################
 
@@ -35,6 +36,13 @@ Spork.each_run do
   ## testes de INTEGRAÇÃO para evitar conflito com os demais teste
   DatabaseCleaner.clean
   ########################################
+
+
+  # This code will be run each time you run your specs.
+
+
+ # DatabaseCleaner.clean
+
 end
 
 # --- Instructions ---
