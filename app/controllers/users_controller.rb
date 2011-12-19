@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
 
   ##########################  Executa antes das ações
-  before_filter :authenticate, :only => [:index, :edit, :update]
+  before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user, :only =>  :destroy
+  before_filter :signed_users, :only => [:new, :create]
   ##########################
   
   def index
@@ -50,9 +51,15 @@ class UsersController < ApplicationController
   end
   
   def destroy
-     User.find(params[:id]).destroy
-     flash[:success] = "User destroyed."
-     redirect_to users_path
+     user = User.find(params[:id])
+     if user.admin? && user == current_user
+        flash[:success] = "User ADM not be destroyed."
+        redirect_to users_path
+     else
+        user.destroy
+        flash[:success] = "User destroyed."
+        redirect_to users_path
+     end
   end
 
   ########################################################
@@ -68,7 +75,11 @@ class UsersController < ApplicationController
     end
 
     def admin_user
-       redirect_to(signin_path) unless !current_user.nil? && current_user.admin?
+       redirect_to(signin_path) unless current_user.admin?
+      ##  Sol. de cris:   redirect_to(signin_path) unless !current_user.nil? && current_user.admin?
     end
   
+    def signed_users
+	redirect_to(root_path) unless !signed_in?
+    end
 end

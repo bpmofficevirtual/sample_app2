@@ -54,7 +54,25 @@ describe UsersController do
 	   response.should have_selector("a", :href => "/users?page=2", :content => "2")
 	   response.should have_selector("a", :href => "/users?page=2", :content => "Next")
         end
+
+        ## EXERCICIO 10.6.4 (estudar + solução abaixo: user_path, have_selector)
+        it "should have delete links for admins" do
+           @user.toggle!(:admin)
+           other_user = User.all.second
+           get :index
+           response.should have_selector('a', :href => user_path(other_user),
+                                              :content => "delete")
+         end
+
+        it "should not have delete links for users" do
+           other_user = User.all.second
+           get :index
+           response.should_not have_selector('a', :href => user_path(other_user),
+                                              :content => "delete")
+         end
+
      end
+
   end
 
   #####################################
@@ -305,18 +323,24 @@ describe UsersController do
            delete :destroy, :id => @user
            response.should redirect_to(users_path)
         end
+
+        it "should not destroy themselves" do
+           lambda do
+              delete :destroy, :id => test_current_user
+           end.should change(User, :count).by(0)
+        end
      end
   end
 
   ######################################################
-  describe "authentication of edit/update pages" do
+  describe "authentication of edit/update/new/create pages" do
   
      before(:each) do
         @user = Factory(:user)
      end
 
      describe "for non-signed-in users" do
-        
+
        it "should deny access to 'edit'" do
           get :edit, :id => @user
           response.should redirect_to(signin_path)
@@ -344,6 +368,16 @@ describe UsersController do
            put :update, :id => @user, :user => {}
            response.should redirect_to(root_path)
         end
+
+       it "should deny access to 'new'" do
+          get :new
+          response.should redirect_to(root_path)
+       end 
+
+       it "should deny access to 'create'" do
+          post :create , :user => {} 
+          response.should redirect_to(root_path)
+       end 
 
      end
 
