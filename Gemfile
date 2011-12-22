@@ -12,16 +12,18 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'gravatar_image_tag', '1.0.0.pre2'
 gem 'will_paginate', '3.0.pre2'
 gem 'heroku'
-gem 'taps'
-gem "ruby-debug19", :require => "ruby-debug"
 
 group :development do
+  gem 'taps'
+  gem "ruby-debug19", :require => "ruby-debug"
   gem 'rspec-rails', '2.3.0'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git' #  gem 'annotate-models', '1.0.4'
   gem 'faker'
 end
 
 group :test do
+  gem 'taps'
+  gem "ruby-debug19", :require => "ruby-debug"
   gem 'rspec', '2.3.0'
   gem 'webrat', '0.7.1'
   gem 'spork',  '0.9.0rc7' # '0.8.4'
