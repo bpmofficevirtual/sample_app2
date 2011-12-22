@@ -15,8 +15,11 @@ class User < ActiveRecord::Base
    # Atributos
    attr_accessor   :password  ## ATRIBUTO VIRTUAL
 
-   ## Questão de segurança do site : :admin não está acessível! (put /users/17?admin=1 não irá operar!)
+   # Questão de segurança do site : :admin não está acessível! (put /users/17?admin=1 não irá operar!)
    attr_accessible :name, :email, :password, :password_confirmation 
+
+   # Relacionamentos
+   has_many :microposts, :dependent => :destroy
 
 
    # Validações
@@ -56,7 +59,13 @@ class User < ActiveRecord::Base
      user = find_by_id(id)
      (user && user.salt == cookie_salt) ? user : nil
    end
-   
+   ################################################
+
+   def feed
+      # This is preliminary.
+      Micropost.where("user_id = ?", id)
+   end
+
    ################################################
    private
 

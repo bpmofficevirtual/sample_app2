@@ -75,22 +75,25 @@ describe "Layout Links" do
 ## Layout Links when signed in should have a profile link
 ##
 
-# describe "when signed in" do
-#    
-#    before(:each) do 
-#       @user = Factory(:user)
-#       integration_sign_in(@user)
-#    end
+describe "when signed in" do
+    
+    before(:each) do 
+       visit signin_path		## 1o)
+       @user = Factory(:user,  :email => Factory.next(:email)) ## 2o)
+       fill_in "Email",        :with => @user.email
+       fill_in "Password",     :with => @user.password
+       click_button
+    end
 
-#     it "should have a signout link" do 
-#       visit root_path
-#       response.should have_selector("a", :href => signout_path, :content => "Sign out")
-#    end
+    it "should have a signout link" do 
+        visit root_path
+        response.should have_selector("a", :href => signout_path, :content => "Sign out")
+    end
 
-#    it "should have a profile link" do
-#       visit root_path
-#       response.should have_selector("a", :href => user_path(@user), :content => "Profile")
-#    end
+    it "should have a profile link" do
+       visit root_path
+       response.should have_selector("a", :href => user_path(@user), :content => "Profile")
+    end
 
-# end
+ end
 end
