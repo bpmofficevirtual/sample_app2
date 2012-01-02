@@ -19,6 +19,8 @@ group :development do
   gem 'rspec-rails', '2.3.0'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git' #  gem 'annotate-models', '1.0.4'
   gem 'faker'
+  gem 'open_terms', '0.0.3'
+  gem 'rb-appscript' if RUBY_PLATFORM =~ /darwin/
 end
 
 group :test do
